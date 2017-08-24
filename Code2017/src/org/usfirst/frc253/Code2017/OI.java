@@ -100,11 +100,11 @@ public class OI {
         ClimbDown = new JoystickButton(buttonBoard, 1);
         ClimbDown.whileHeld(new ClimbDownAccel());
         
-        SpinClockwise = new JoystickButton(leftJoystick, 4);
-        SpinClockwise.whenPressed(new AutoSpinClockwise());
+        SpinClockwise = new JoystickButton(leftJoystick, 5);
+        SpinClockwise.whileHeld(new SpinClockwise());
         
-        SpinCounterwise =  new JoystickButton(leftJoystick, 5);
-        SpinCounterwise.whenPressed(new AutoSpinCounterwise());
+        SpinCounterwise =  new JoystickButton(leftJoystick, 4);
+        SpinCounterwise.whileHeld(new SpinCounterwise());
     }
 
     public Joystick getLeftJoystick() {
