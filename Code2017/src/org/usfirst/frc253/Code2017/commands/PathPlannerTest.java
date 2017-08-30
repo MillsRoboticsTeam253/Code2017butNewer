@@ -117,6 +117,7 @@ public class PathPlannerTest extends Command {
 	
 	Timer myTimer = new Timer();
 	
+	
     public PathPlannerTest() {
     	requires(Robot.drivetraintank);
     }
@@ -127,20 +128,25 @@ public class PathPlannerTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	myTimer.start();
-    	
-    	for(int i = 0; i < numberOfTimeSteps; i++) {
-    		//try changing this to if() if while() doesn't work
-    		while(myTimer.get() == leftVelocity[i][0]) {
-    			Robot.drivetraintank.setLeft_Back(leftVelocity[i][1]);
-    			Robot.drivetraintank.setLeft(leftVelocity[i][1]);
-    			Robot.drivetraintank.setRight(rightVelocity[i][1]);
-    	    	Robot.drivetraintank.setRight_Back(rightVelocity[i][1]);
-    		}
+//    	myTimer.start();
+    	for(int i = 0; i < .5; i += .01){
+    		Robot.drivetraintank.setLeft_Back(-i);
+        	Robot.drivetraintank.setLeft(-i);
+        	Robot.drivetraintank.setRight(-i);
+        	Robot.drivetraintank.setRight_Back(-i);
     	}
     	
-    	myTimer.stop();
-    	end();
+    	
+//    	for(int i = 0; i < numberOfTimeSteps; i++) {
+//    		//try changing this to if() if while() doesn't work
+////    		System.out.println(myTimer.get());
+//    		if(i/10 == leftVelocity[i][0]) {
+//    			Robot.drivetraintank.setLeft_Back(leftVelocity[i][1]);
+//    			Robot.drivetraintank.setLeft(leftVelocity[i][1]);
+//    			Robot.drivetraintank.setRight(rightVelocity[i][1]);
+//    	    	Robot.drivetraintank.setRight_Back(rightVelocity[i][1]);
+//    		}
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -42,6 +42,8 @@ public class OI {
     
     public JoystickButton ClimbUp;
     public JoystickButton ClimbDown;
+    
+    public JoystickButton PathPlannerTest;
     // These objects are referenced below in public OI()
 
     public OI() {
@@ -98,7 +100,10 @@ public class OI {
         ClimbDown = new JoystickButton(buttonBoard, 1);
         ClimbDown.whileHeld(new ClimbDownAccel());
         
-        SmartDashboard.putData("PathPlannerTest", new PathPlannerTest());
+//        SmartDashboard.putData("PathPlannerTest", new PathPlannerTest());
+        
+        PathPlannerTest = new JoystickButton(leftJoystick, 1);
+        PathPlannerTest.whileHeld(new PathPlannerTest());
     }
 
     public Joystick getLeftJoystick() {
