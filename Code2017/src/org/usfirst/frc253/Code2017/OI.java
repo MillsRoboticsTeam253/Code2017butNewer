@@ -14,6 +14,7 @@ package org.usfirst.frc253.Code2017;
 import org.usfirst.frc253.Code2017.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
 	
@@ -96,6 +97,8 @@ public class OI {
         
         ClimbDown = new JoystickButton(buttonBoard, 1);
         ClimbDown.whileHeld(new ClimbDownAccel());
+        
+        SmartDashboard.putData("PathPlannerTest", new PathPlannerTest());
     }
 
     public Joystick getLeftJoystick() {
