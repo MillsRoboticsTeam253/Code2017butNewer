@@ -129,12 +129,17 @@ public class PathPlannerTest extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 //    	myTimer.start();
-    	for(int i = 0; i < .5; i += .01){
-    		Robot.drivetraintank.setLeft_Back(-i);
-        	Robot.drivetraintank.setLeft(-i);
-        	Robot.drivetraintank.setRight(-i);
-        	Robot.drivetraintank.setRight_Back(-i);
-    	}
+//    	for(int i = 0; i < .5; i += .01){
+//    		Robot.drivetraintank.setLeft_Back(-i);
+//        	Robot.drivetraintank.setLeft(-i);
+//        	Robot.drivetraintank.setRight(-i);
+//        	Robot.drivetraintank.setRight_Back(-i);
+//    	}
+    	Robot.drivetraintank.setLeft_Back(-.35);
+    	Robot.drivetraintank.setLeft(-.35);
+    	Robot.drivetraintank.setRight(-.35);
+     	Robot.drivetraintank.setRight_Back(-.35);
+    	
     	
     	
 //    	for(int i = 0; i < numberOfTimeSteps; i++) {
