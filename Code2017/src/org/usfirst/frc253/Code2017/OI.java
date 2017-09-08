@@ -41,9 +41,6 @@ public class OI {
     
     public JoystickButton ClimbUp;
     public JoystickButton ClimbDown;
-    
-    public JoystickButton SpinClockwise;
-    public JoystickButton SpinCounterwise;
     // These objects are referenced below in public OI()
 
     public OI() {
@@ -99,12 +96,6 @@ public class OI {
         
         ClimbDown = new JoystickButton(buttonBoard, 1);
         ClimbDown.whileHeld(new ClimbDownAccel());
-        
-        SpinClockwise = new JoystickButton(leftJoystick, 5);
-        SpinClockwise.whileHeld(new SpinClockwise());
-        
-        SpinCounterwise =  new JoystickButton(leftJoystick, 4);
-        SpinCounterwise.whileHeld(new SpinCounterwise());
     }
 
     public Joystick getLeftJoystick() {
