@@ -2,6 +2,8 @@ package org.usfirst.frc253.Code2017.kinect;
 
 import javax.swing.JLabel;
 
+import org.usfirst.frc253.Code2017.Robot;
+
 import edu.ufl.digitalworlds.j4k.DepthMap;
 import edu.ufl.digitalworlds.j4k.J4KSDK;
 import edu.ufl.digitalworlds.j4k.Skeleton;
@@ -100,11 +102,39 @@ public class Kinect extends J4KSDK{
 		
 		for(int i=0;i<getSkeletonCountLimit();i++) {
 			if(viewer.skeletons[i].isTracked()==true) {
-				System.out.println(i);
-				System.out.println("X:" + viewer.skeletons[i].get3DJointX(Skeleton.HAND_RIGHT));
-				System.out.println("Y:" + viewer.skeletons[i].get3DJointY(Skeleton.HAND_RIGHT));
-				System.out.println("Z:" + viewer.skeletons[i].get3DJointZ(Skeleton.HAND_RIGHT));
-				System.out.println();
+				double leftWristY = viewer.skeletons[i].get3DJointY(Skeleton.WRIST_LEFT);
+				double rightWristY = viewer.skeletons[i].get3DJointY(Skeleton.WRIST_RIGHT);
+				double spineBaseY = viewer.skeletons[i].get3DJointY(Skeleton.SPINE_BASE);
+				
+				double leftSpeed = leftWristY - spineBaseY;
+				double rightSpeed = rightWristY - spineBaseY;
+				
+				if(Math.abs(leftSpeed) > .125)
+		    		Robot.drivetraintank.setLeft(leftSpeed);
+		    	else
+		    		Robot.drivetraintank.setLeft(0);
+		    		
+		    	
+		    	if(Math.abs(rightSpeed) > -.125)
+		    		Robot.drivetraintank.setRight(rightSpeed);
+		    	else
+		    		Robot.drivetraintank.setRight(0);
+		    	if(Math.abs(leftSpeed) > .125)
+		    		Robot.drivetraintank.setLeft_Back(leftSpeed);
+		    	else
+		    		Robot.drivetraintank.setLeft_Back(0);
+		    	
+		    	if(Math.abs(rightSpeed) > .125)
+		    		Robot.drivetraintank.setRight_Back(rightSpeed);
+		    	else
+		    		Robot.drivetraintank.setRight_Back(0);
+				
+				
+//				System.out.println(i);
+//				System.out.println("X:" + viewer.skeletons[i].get3DJointX(Skeleton.HAND_RIGHT));
+//				System.out.println("Y:" + viewer.skeletons[i].get3DJointY(Skeleton.HAND_RIGHT));
+//				System.out.println("Z:" + viewer.skeletons[i].get3DJointZ(Skeleton.HAND_RIGHT));
+//				System.out.println();
 			}
 		}
 		

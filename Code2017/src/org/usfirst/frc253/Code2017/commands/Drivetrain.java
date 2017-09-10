@@ -2,7 +2,6 @@
 package org.usfirst.frc253.Code2017.commands;
 
 import org.usfirst.frc253.Code2017.RobotMap;
-import org.usfirst.frc253.Code2017.subsystems.TankDrive;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -26,7 +25,6 @@ public class Drivetrain extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new TankDrive());
     }
     
     public void setLeft(double power) {
