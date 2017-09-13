@@ -9,5 +9,9 @@
 	<classpathentry kind="lib" path="C:/Users/Eric/wpilib/java/current/lib/cscore.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Eric/wpilib/java/current/lib/NetworkTables.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Eric/wpilib/java/current/lib/opencv.jar"/>
+	<classpathentry kind="lib" path="/j4kdemo/lib/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="/j4kdemo/lib/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="/j4kdemo/lib/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="/j4kdemo/lib/jogl-all-natives-windows-i586.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
