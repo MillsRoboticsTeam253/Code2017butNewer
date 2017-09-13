@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CameraServer;
 
+@SuppressWarnings("unchecked")
 public class Robot extends IterativeRobot {
 	
 	Command autonomousCommand;
