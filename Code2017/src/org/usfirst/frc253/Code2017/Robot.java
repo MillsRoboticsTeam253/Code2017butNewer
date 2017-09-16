@@ -12,6 +12,9 @@
 package org.usfirst.frc253.Code2017;
 
 import org.usfirst.frc253.Code2017.subsystems.*;
+import org.usfirst.frc253.Code2017.vision.*;
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc253.Code2017.commands.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,6 +22,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.wpilibj.CameraServer;
 
 public class Robot extends IterativeRobot {
@@ -37,12 +43,18 @@ public class Robot extends IterativeRobot {
     CameraServer camera;
     //These are referenced in robotInit()
     
+    private VisionThread visionThread;
+    private double centerX = 0.0;
+    private final Object imgLock = new Object();
+    
     public void robotInit() {
     	LiveWindow.run();
     	RobotMap.init();
     	
     	//enables camera
     	camera.getInstance().startAutomaticCapture();
+    	
+    	CvSink video = camera.getVideo();
     	
     	//Subsystems
     	drivetraintank = new Drivetrain();
@@ -57,6 +69,16 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Right Position", new AutoRight());	// add another command
         autoChooser.addObject("Left Position", new AutoLeft());
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
+        visionThread = new VisionThread(video, new GripPipeline(), pipeline -> {
+            if (!pipeline.filterContoursOutput().isEmpty()) {
+                Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+                synchronized (imgLock) {
+                    centerX = r.x + (r.width / 2);
+                }
+            }
+        });
+        visionThread.start();
+        SmartDashboard.putNumber("Center X", centerX);
 
         oi = new OI();
      }
