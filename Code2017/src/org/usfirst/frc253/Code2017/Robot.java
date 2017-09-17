@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.wpilibj.CameraServer;
 
@@ -39,8 +40,6 @@ public class Robot extends IterativeRobot {
     public static Servo servo;
     public static Climber climber;
     public static SensorData sensorData;
-    
-    CameraServer camera;
     //These are referenced in robotInit()
     
     private VisionThread visionThread;
@@ -52,9 +51,9 @@ public class Robot extends IterativeRobot {
     	RobotMap.init();
     	
     	//enables camera
-    	camera.getInstance().startAutomaticCapture();
+    	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    	camera.setResolution(640, 480);
     	
-    	CvSink video = camera.getVideo();
     	
     	//Subsystems
     	drivetraintank = new Drivetrain();
@@ -69,7 +68,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Right Position", new AutoRight());	// add another command
         autoChooser.addObject("Left Position", new AutoLeft());
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
-        visionThread = new VisionThread(video, new GripPipeline(), pipeline -> {
+        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
             if (!pipeline.filterContoursOutput().isEmpty()) {
                 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                 synchronized (imgLock) {
