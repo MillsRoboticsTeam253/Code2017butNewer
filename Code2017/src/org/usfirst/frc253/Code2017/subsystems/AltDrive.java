@@ -29,17 +29,18 @@ public class AltDrive extends Command {
     	//Joystick anti-drift
     	if(Math.abs(throttle) > .125){
     		Robot.drivetraintank.setLeft(throttle * turnModifier);
+    		Robot.drivetraintank.setLeft_Back(throttle * turnModifier);
     	    Robot.drivetraintank.setRight(throttle * (2.00 - turnModifier));
+    	    Robot.drivetraintank.setRight_Back(throttle * (2.00 - turnModifier));
+    	} else if(Math.abs(direction) > .125){
+    		Robot.drivetraintank.setLeft(-direction);
+    		Robot.drivetraintank.setLeft_Back(-direction);
+    		Robot.drivetraintank.setRight(direction);
+    		Robot.drivetraintank.setRight_Back(direction);
     	} else {
     		Robot.drivetraintank.setLeft(0);
-    		Robot.drivetraintank.setRight(0);
-    	}
-    	
-    	if(Math.abs(throttle) > .125){
-    		Robot.drivetraintank.setLeft_Back(throttle * turnModifier);
-    		Robot.drivetraintank.setRight_Back(throttle * (2.00 - turnModifier));
-    	} else {
     		Robot.drivetraintank.setLeft_Back(0);
+    		Robot.drivetraintank.setRight(0);
     		Robot.drivetraintank.setRight_Back(0);
     	}
     }
