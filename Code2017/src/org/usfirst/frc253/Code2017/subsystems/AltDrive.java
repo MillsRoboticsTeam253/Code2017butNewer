@@ -32,7 +32,7 @@ public class AltDrive extends Command {
     		Robot.drivetraintank.setLeft_Back(throttle * turnModifier);
     	    Robot.drivetraintank.setRight(throttle * (2.00 - turnModifier));
     	    Robot.drivetraintank.setRight_Back(throttle * (2.00 - turnModifier));
-    	} else if(Math.abs(direction) > .125){
+    	} else if(Math.abs(throttle) < .125 && Math.abs(direction) > .125){
     		Robot.drivetraintank.setLeft(-direction);
     		Robot.drivetraintank.setLeft_Back(-direction);
     		Robot.drivetraintank.setRight(direction);
