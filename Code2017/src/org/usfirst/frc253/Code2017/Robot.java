@@ -77,8 +77,8 @@ public class Robot extends IterativeRobot {
             }
         });
         visionThread.start();
-        SmartDashboard.putNumber("Center X", centerX);
-
+//        SmartDashboard.putNumber("Center X", centerX);
+        
         oi = new OI();
      }
     public void disabledInit(){
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-    	autonomousCommand = (Command) autoChooser.getSelected();
+//    	autonomousCommand = (Command) autoChooser.getSelected();
     	if(autonomousCommand != null){
     		System.out.println(autonomousCommand.toString());
     		autonomousCommand.start();
@@ -97,7 +97,28 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousPeriodic() {
-    	 Scheduler.getInstance().run();
+//    	 Scheduler.getInstance().run();
+    	double centerX;
+        synchronized (imgLock) {
+            centerX = this.centerX;
+        }
+        double offset = centerX - 320;
+        if(offset > 35){
+        	Robot.drivetraintank.setLeft(-.25);
+        	Robot.drivetraintank.setLeft_Back(-.25);
+        	Robot.drivetraintank.setRight(.25);
+        	Robot.drivetraintank.setRight_Back(.25);
+        } else if(offset < -35){
+        	Robot.drivetraintank.setLeft(.18);
+        	Robot.drivetraintank.setLeft_Back(.18);
+        	Robot.drivetraintank.setRight(-.18);
+        	Robot.drivetraintank.setRight_Back(-.18);
+        } else {
+        	Robot.drivetraintank.setLeft(0);
+        	Robot.drivetraintank.setLeft_Back(0);
+        	Robot.drivetraintank.setRight(0);
+        	Robot.drivetraintank.setRight_Back(0);
+        }
     }
 
     public void teleopInit() {
