@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 
 public class Robot extends IterativeRobot {
@@ -34,6 +35,8 @@ public class Robot extends IterativeRobot {
     public static Climber climber;
     public static SensorData sensorData;
     
+    public static Jetson jetson = null;
+    
     CameraServer camera;
     //These are referenced in robotInit()
     
@@ -42,7 +45,11 @@ public class Robot extends IterativeRobot {
     	RobotMap.init();
     	
     	//enables camera
-    	camera.getInstance().startAutomaticCapture();
+    	UsbCamera camera0  = CameraServer.getInstance().startAutomaticCapture();
+    	camera0.setResolution(320, 240);
+    	
+    	jetson = new Jetson("jetsonThread");
+		jetson.start();
     	
     	//Subsystems
     	drivetraintank = new Drivetrain();
