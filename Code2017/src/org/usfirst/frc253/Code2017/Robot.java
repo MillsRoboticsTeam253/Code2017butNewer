@@ -46,13 +46,19 @@ public class Robot extends IterativeRobot {
     private double centerX = 0.0;
     private final Object imgLock = new Object();
     
+    private final int CAMERA_WIDTH = 640;
+    private final int CAMERA_HEIGHT = 480;
+    private final double FOV = 60;
+    
+    private final double horizontalDPP = FOV/CAMERA_WIDTH;
+    
     public void robotInit() {
     	LiveWindow.run();
     	RobotMap.init();
     	
     	//enables camera
     	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    	camera.setResolution(640, 480);
+    	camera.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
     	
     	
     	//Subsystems
@@ -102,13 +108,13 @@ public class Robot extends IterativeRobot {
         synchronized (imgLock) {
             centerX = this.centerX;
         }
-        double offset = centerX - 320;
-        if(offset > 35){
+        double yaw = ((centerX - ((CAMERA_WIDTH / 2) - 0.5)) * horizontalDPP);
+        if(yaw < -10){
         	Robot.drivetraintank.setLeft(-.25);
         	Robot.drivetraintank.setLeft_Back(-.25);
         	Robot.drivetraintank.setRight(.25);
         	Robot.drivetraintank.setRight_Back(.25);
-        } else if(offset < -35){
+        } else if(yaw > 10){
         	Robot.drivetraintank.setLeft(.18);
         	Robot.drivetraintank.setLeft_Back(.18);
         	Robot.drivetraintank.setRight(-.18);
