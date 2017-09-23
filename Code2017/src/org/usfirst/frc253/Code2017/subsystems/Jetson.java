@@ -7,7 +7,7 @@ public class Jetson implements Runnable{
 
 	private static double leftDisplacement = 0.0;
 	private static double rightDisplacement = 0.0;
-	private static String jetsonIP = ;
+	private static String jetsonIP = "10.2.53.107";
 	
 	private Thread t;
 	private String threadName;
