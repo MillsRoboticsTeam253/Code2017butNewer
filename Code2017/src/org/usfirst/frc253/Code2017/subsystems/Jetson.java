@@ -1,7 +1,8 @@
 package org.usfirst.frc253.Code2017.subsystems;
 
-import java.nio.charset.StandardCharsets;
 import org.zeromq.ZMQ;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Jetson implements Runnable{
 
@@ -19,19 +20,9 @@ public class Jetson implements Runnable{
 	}
 	
 	public void run() {
-		String data = subscriber.recvStr(StandardCharsets.UTF_8).trim();
-    	String[] strings = data.split(" ");
-    			
-    	String str = strings[1].trim().replaceAll("[^\\d|\\.|-]", "");
-    	double L = Double.parseDouble(str);
-    	
-    	String str2 = strings[1].trim().replaceAll("[^\\d|\\.|-]", "");
-    	double R = Double.parseDouble(str2);
-    	
-    	setLeftDisplacement(L);
-    	setRightDisplacement(R);
-    	
-    	System.out.println("vision displacement: L: " + L + " R: " + R);
+		String data = subscriber.recvStr();
+	
+    	SmartDashboard.putString("Data", data);
 	}
 	
 	public void start () {
