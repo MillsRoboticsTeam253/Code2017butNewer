@@ -31,14 +31,11 @@ public class Jetson implements Runnable{
 		
 		subscriber.connect("tcp://" + jetsonIP + ":5801");
 		
-		String filter = "displacement";
-		subscriber.subscribe(filter.getBytes());
-		
 		System.out.println("Starting " +  threadName );
 		
 	    if (t == null) {
 	    	t = new Thread (this, threadName);
-	    	t.start ();
+	    	t.run();
 	    }
 	}
 	
