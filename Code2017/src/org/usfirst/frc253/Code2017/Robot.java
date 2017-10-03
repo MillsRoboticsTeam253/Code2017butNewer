@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
     public static Climber climber;
     public static SensorData sensorData;
     
-    public static Jetson jetson = null;
+    public static Jetson jetson;
     
     CameraServer camera;
     //These are referenced in robotInit()
@@ -49,7 +49,8 @@ public class Robot extends IterativeRobot {
     	camera0.setResolution(320, 240);
     	
     	jetson = new Jetson("jetsonThread");
-		jetson.start();
+		jetson.run();
+		
     	
     	//Subsystems
     	drivetraintank = new Drivetrain();
