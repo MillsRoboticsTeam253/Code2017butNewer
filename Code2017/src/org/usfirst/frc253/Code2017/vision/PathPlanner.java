@@ -1,11 +1,7 @@
 package org.usfirst.frc253.Code2017.vision;
 
-import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 import java.util.LinkedList;
 import java.util.List;
-
-
 
 /**
  * This Class provides many useful algorithms for Robot Path Planning. It uses optimization techniques and knowledge
@@ -32,7 +28,7 @@ import java.util.List;
  * @date 2014-Aug-11
  *
  */
-public class FalconPathPlanner {
+public class PathPlanner {
 	//Path Variables
 	public double[][] origPath;
 	public double[][] nodeOnlyPath;
@@ -78,7 +74,7 @@ public class FalconPathPlanner {
 		The units of these coordinates are position units assumed by the user (i.e inch, foot, meters) 
 	 * @param path
 	 */
-	public FalconPathPlanner(double[][] path) {
+	public PathPlanner(double[][] path) {
 		this.origPath = doubleArrayCopy(path);
 		//default values DO NOT MODIFY;
 		pathAlpha = 0.7;
@@ -499,28 +495,5 @@ public class FalconPathPlanner {
 		smoothCenterVelocity = velocityFix(smoothCenterVelocity, origCenterVelocity, 0.0000001);
 		smoothLeftVelocity = velocityFix(smoothLeftVelocity, origLeftVelocity, 0.0000001);
 		smoothRightVelocity = velocityFix(smoothRightVelocity, origRightVelocity, 0.0000001);
-	}
-	//main program
-	public static void main(String[] args) {
-		long start = System.currentTimeMillis();
-		//System.setProperty("java.awt.headless", "true"); //enable this to true to emulate roboRio environment
-
-
-		//create waypoint path
-		double[][] waypoints = new double[][]{
-				{0, 0},
-				{5, 0},
-				{7, 6},
-				{12, 6}
-		}; 
-
-		double totalTime = 5; //seconds
-		double timeStep = 0.1; //period of control loop on Rio, seconds
-		double robotTrackWidth = 2; //distance between left and right wheels, feet
-
-		final FalconPathPlanner path = new FalconPathPlanner(waypoints);
-		path.calculate(totalTime, timeStep, robotTrackWidth);
-		
-		path.print(path.smoothLeftVelocity);
 	}
 }

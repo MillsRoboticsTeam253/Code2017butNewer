@@ -6,6 +6,6 @@
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
 	<classpathentry kind="var" path="cscore" sourcepath="cscore.sources"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator.TALAP01/wpilib/java/current/lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Eric/wpilib/java/current/lib/WPILib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -40,24 +40,22 @@ public class Robot extends IterativeRobot {
     public static Servo servo;
     public static Climber climber;
     public static SensorData sensorData;
+    public static VisionProcess visionProcess;
     //These are referenced in robotInit()
+
+    public static UsbCamera camera;
+    public final static int CAMERA_WIDTH = 640;
+    public final static int CAMERA_HEIGHT = 480;
     
-    private VisionThread visionThread;
-    private double centerX = 0.0;
-    private final Object imgLock = new Object();
-    
-    private final int CAMERA_WIDTH = 640;
-    private final int CAMERA_HEIGHT = 480;
-    private final double FOV = 60;
-    
-    private final double horizontalDPP = FOV/CAMERA_WIDTH;
+    public final static double TIME_STEP = 0.1; //in seconds
+    public final static double TRACK_WIDTH = 2; //in feet
     
     public void robotInit() {
     	LiveWindow.run();
     	RobotMap.init();
     	
     	//enables camera
-    	UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    	camera = CameraServer.getInstance().startAutomaticCapture();
     	camera.setResolution(CAMERA_WIDTH, CAMERA_HEIGHT);
     	
     	
@@ -74,16 +72,10 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Right Position", new AutoRight());	// add another command
         autoChooser.addObject("Left Position", new AutoLeft());
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
-        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-            if (!pipeline.filterContoursOutput().isEmpty()) {
-                Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-                synchronized (imgLock) {
-                    centerX = r.x + (r.width / 2);
-                }
-            }
-        });
-        visionThread.start();
+        
 //        SmartDashboard.putNumber("Center X", centerX);
+        visionProcess = new VisionProcess();
+    	visionProcess.start();
         
         oi = new OI();
      }
@@ -103,28 +95,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousPeriodic() {
-//    	 Scheduler.getInstance().run();
-    	double centerX;
-        synchronized (imgLock) {
-            centerX = this.centerX;
-        }
-        double yaw = ((centerX - ((CAMERA_WIDTH / 2) - 0.5)) * horizontalDPP);
-        if(yaw < -10){
-        	Robot.drivetraintank.setLeft(-.25);
-        	Robot.drivetraintank.setLeft_Back(-.25);
-        	Robot.drivetraintank.setRight(.25);
-        	Robot.drivetraintank.setRight_Back(.25);
-        } else if(yaw > 10){
-        	Robot.drivetraintank.setLeft(.18);
-        	Robot.drivetraintank.setLeft_Back(.18);
-        	Robot.drivetraintank.setRight(-.18);
-        	Robot.drivetraintank.setRight_Back(-.18);
-        } else {
-        	Robot.drivetraintank.setLeft(0);
-        	Robot.drivetraintank.setLeft_Back(0);
-        	Robot.drivetraintank.setRight(0);
-        	Robot.drivetraintank.setRight_Back(0);
-        }
+    	 Scheduler.getInstance().run();
     }
 
     public void teleopInit() {
