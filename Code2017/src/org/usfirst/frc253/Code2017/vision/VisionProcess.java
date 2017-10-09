@@ -11,23 +11,24 @@ public class VisionProcess extends Thread {
 	private final Object imgLock = new Object();
 	
 	//Constants
-	private final double realSize = 2;
-	private final double focalLength = 1;
+	private final double realHeight = 2; //TODO find actual height
+	private final double realWidth = 1; //TODO find actual real width
+	private final double focalLength = 1; //TODO find actual focal length
 	private final double FOV = 60;
     private final double horizontalDPP = FOV/Robot.CAMERA_WIDTH;
+    private final double cameraCenter = Robot.CAMERA_WIDTH/2;
 
 	//Intermediate calculations
 	//Numbers that are important but only because we need them to calculate other things
-	private double perceivedSize = 0.0;
+	private double perceivedHeight = 0.0;
 	private double pegCenter = 0.0;
-	private final double cameraCenter = 640/2;
 
-	private double angleFromPeg = 45; //TODO: find out how to find this
+	private double angleFromPeg = 0.0;
 	private double distanceDirect = 0.0;
 	private double angleRobot = 0.0;
 	
-	private double distanceOffset;
-	private double distanceTravel;
+	private double distanceOffset = 0.0;
+	private double distanceTravel = 0.0;
     
     public VisionProcess() {
     	visionThread = new VisionThread(Robot.camera, new GripPipeline(), pipeline -> {
@@ -36,9 +37,10 @@ public class VisionProcess extends Thread {
                 synchronized (imgLock) {
                     pegCenter = peg.x + (peg.width / 2);
                     //robot facing to the right of the peg is positive
-                    angleRobot = (cameraCenter - pegCenter) * horizontalDPP;
-                    perceivedSize = peg.height;
-                    distanceDirect = (realSize * focalLength)/perceivedSize;
+                    angleRobot = ((cameraCenter - pegCenter) * horizontalDPP) * (Math.PI / 180);
+                    perceivedHeight = peg.height;
+                    distanceDirect = (realHeight * focalLength)/perceivedHeight;
+                    angleFromPeg = (Math.PI/2) - Math.asin(peg.width / realWidth);
                     distanceOffset = distanceDirect * Math.sin(angleFromPeg);
                     distanceTravel = distanceDirect * Math.cos(angleFromPeg);
                 }
@@ -52,8 +54,8 @@ public class VisionProcess extends Thread {
     
     public double[][] findWaypoints() {
     	synchronized (imgLock) {
-    		double angleFromPeg = this.angleFromPeg * (Math.PI/180);
-    		double angleRobot = this.angleRobot * (Math.PI/180);
+    		double angleFromPeg = this.angleFromPeg;
+    		double angleRobot = this.angleRobot;
     		double[][] waypoints = new double[][]{
 				{0, 0},
 				{distanceTravel/4, Math.tan(angleFromPeg - angleRobot) * (distanceTravel/4)},

@@ -27,7 +27,7 @@ public class GoToPeg extends CommandGroup {
     	this.rightVelocity = PathPlanner.getYVector(path.smoothRightVelocity);
     	
     	for(int i = 0; i < leftVelocity.length-1; i++) {
-    		addSequential(new Step(leftVelocity[i], rightVelocity[i]));
+    		addSequential(new Step(leftVelocity[i] / 10, rightVelocity[i] / 10));
     	}
     }
 }
