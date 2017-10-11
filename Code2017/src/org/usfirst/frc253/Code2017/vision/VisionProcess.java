@@ -16,7 +16,7 @@ public class VisionProcess extends Thread {
 	//Constants
 	private final double realHeight = 2; //TODO find actual height
 	private final double realWidth = 1; //TODO find actual real width
-	private final double focalLength = 1; //TODO find actual focal length
+	private final double focalLength = 0.814; //in feet; https://www.chiefdelphi.com/forums/showthread.php?p=1653594
 	private final double FOV = 60;
     private final double horizontalDPP = FOV/Robot.CAMERA_WIDTH;
     private final double cameraCenter = Robot.CAMERA_WIDTH/2;
@@ -47,6 +47,7 @@ public class VisionProcess extends Thread {
                     angleRobot = ((cameraCenter - pegCenter) * horizontalDPP) * (Math.PI / 180);
                     //comparing real and perceived height to calculate distance
                     perceivedHeight = peg.height;
+                    //distanceDirect is calculated in feet
                     distanceDirect = (realHeight * focalLength)/perceivedHeight;
                     //DEPRECATED find angle from peg
                     robotBearing = (gyro.getAngle() % 360) * (Math.PI/180);
