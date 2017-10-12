@@ -23,10 +23,12 @@ public class VisionProcess extends Thread {
     private final double cameraCenter = Robot.CAMERA_WIDTH/2;
     private final double leftPegBearing = 0; //TODO find value
     private final double rightPegBearing = 0; //TODO find value
+    private final double offsetRatioThresh = 0.968; //5 degree threshold
 
 	//Intermediate calculations
 	//Numbers that are important but only because we need them to calculate other things
 	private double perceivedHeight = 0.0;
+	private double perceivedWidth = 0.0;
 	private double pegCenter = 0.0;
 
 	private double angleFromPeg = 0.0;
@@ -43,11 +45,13 @@ public class VisionProcess extends Thread {
             if (!pipeline.filterContoursOutput().isEmpty()) {
                 Rect peg = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                 synchronized (imgLock) {
-                    pegCenter = peg.x + (peg.width / 2);
+                	//comparing real and perceived height to calculate distance
+                    perceivedHeight = peg.height;
+                    perceivedWidth = peg.width;
+                    
+                	pegCenter = peg.x + (peg.width / 2);
                     //robot facing to the right of the peg is positive
                     angleRobot = ((cameraCenter - pegCenter) * horizontalDPP) * (Math.PI / 180);
-                    //comparing real and perceived height to calculate distance
-                    perceivedHeight = peg.height;
                     //distanceDirect is calculated in feet
                     distanceDirect = (realHeight * focalLength)/perceivedHeight;
                     //DEPRECATED find angle from peg
@@ -95,13 +99,26 @@ public class VisionProcess extends Thread {
      * @return 1 = left; 2 = center; 3 = right
      */
     public int whichPeg() {
-    	int output;
     	synchronized (imgLock) {
     		if(Math.abs(robotBearing - angleRobot) < (2.0 * (Math.PI/180))) {
     			return 2;
     		}
     		return 0; //TODO add conditionals for left and right
     	}
+    }
+    
+    public boolean isOffset() {
+    	double perceivedWidth = getPerceivedWidth();
+    	double ratio = perceivedWidth / realWidth; //closer to 1 == less offset
+    	if(Math.abs(ratio) > offsetRatioThresh) { 
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
+    
+    public double getPerceivedWidth() {
+    	return perceivedWidth;
     }
     
     public double getRobotAngle() {
