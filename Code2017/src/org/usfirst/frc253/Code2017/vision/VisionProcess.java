@@ -5,6 +5,7 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc253.Code2017.Robot;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 
@@ -58,6 +59,12 @@ public class VisionProcess extends Thread {
                      */
                     distanceOffset = distanceDirect * Math.sin(angleFromPeg);
                     distanceTravel = distanceDirect * Math.cos(angleFromPeg);
+                    
+                    SmartDashboard.putNumber("Perceived Height in pixels", perceivedHeight);
+                    SmartDashboard.putNumber("Peg Center in pixels", pegCenter);
+                    SmartDashboard.putNumber("Robot Angle in pixels", angleRobot);
+                    SmartDashboard.putNumber("Direct Distance to Peg in feet", distanceDirect);
+                    SmartDashboard.putNumber("Bearing of the Robot in degrees", robotBearing * (180/Math.PI));
                 }
             }
         });

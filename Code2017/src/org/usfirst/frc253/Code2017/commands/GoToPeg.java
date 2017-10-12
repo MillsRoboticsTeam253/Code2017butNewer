@@ -10,10 +10,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GoToPeg extends CommandGroup {
 
 	double[][] waypoints;
-	double totalTime = 5; //TODO add function to determine optimal total time
+	double totalTime = 2; //TODO add function to determine optimal total time
 	final PathPlanner path;
 	double[] leftVelocity;
 	double[] rightVelocity;
+	
+	private final double[][] centerTest = new double[][]{
+		{0,0},
+		{7.8125,0}
+	};
 	
     public GoToPeg() {
         // Use requires() here to declare subsystem dependencies
@@ -21,7 +26,7 @@ public class GoToPeg extends CommandGroup {
     	requires(Robot.drivetraintank);
     	
     	this.waypoints = Robot.visionProcess.findWaypoints();
-    	this.path = new PathPlanner(waypoints);
+    	this.path = new PathPlanner(centerTest); //TODO change back to waypoints
     	this.path.calculate(totalTime, Robot.TIME_STEP, Robot.TRACK_WIDTH);
     	this.leftVelocity = PathPlanner.getYVector(path.smoothLeftVelocity);
     	this.rightVelocity = PathPlanner.getYVector(path.smoothRightVelocity);
