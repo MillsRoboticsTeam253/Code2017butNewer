@@ -15,7 +15,7 @@ public class VisionProcess extends Thread {
 	private AnalogGyro gyro;
 	
 	//Constants
-	private final double realHeight = 2; //TODO find actual height
+	private final double realHeight = (5.0/12.0); //in feet
 	private final double realWidth = 1; //TODO find actual real width
 	private final double focalLength = 0.814; //in feet; https://www.chiefdelphi.com/forums/showthread.php?p=1653594
 	private final double FOV = 60;
@@ -77,13 +77,15 @@ public class VisionProcess extends Thread {
     
     public double[][] findWaypoints() {
     	synchronized (imgLock) {
-    		double angleFromPeg = this.angleFromPeg;
-    		double angleRobot = this.angleRobot;
+    		double angleFromPeg = getAngleFromPeg();
+    		double angleRobot = getRobotAngle();
+    		double travel = getTravelDistance();
+    		double offset = getOffsetDistance();
     		double[][] waypoints = new double[][]{
 				{0, 0},
-				{distanceTravel/4, Math.tan(angleFromPeg - angleRobot) * (distanceTravel/4)},
-				{distanceTravel/2, distanceOffset},
-				{distanceTravel, distanceOffset}
+				{travel/4, Math.tan(angleFromPeg - angleRobot) * (travel/4)},
+				{travel/2, offset},
+				{travel, offset}
     		}; 
     		return waypoints;
     	}
@@ -100,5 +102,21 @@ public class VisionProcess extends Thread {
     		}
     		return 0; //TODO add conditionals for left and right
     	}
+    }
+    
+    public double getRobotAngle() {
+    	return angleRobot;
+    }
+    
+    public double getAngleFromPeg() {
+    	return angleFromPeg;
+    }
+    
+    public double getTravelDistance() {
+    	return distanceTravel;
+    }
+    
+    public double getOffsetDistance() {
+    	return distanceOffset;
     }
 }
