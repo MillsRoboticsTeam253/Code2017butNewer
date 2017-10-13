@@ -46,29 +46,42 @@ public class VisionProcess extends Thread {
     public VisionProcess() {
     	this.gyro = Robot.sensorData.gyro;
     	visionThread = new VisionThread(Robot.camera, new GripPipeline(), pipeline -> {
-            if (!pipeline.filterContoursOutput().isEmpty() && pipeline.filterContoursOutput().size() >= 2) {
+            if (!pipeline.filterContoursOutput().isEmpty()) {
                 Rect peg1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                 Rect peg2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+                Rect pegPiece = Imgproc.boundingRect(pipeline.filterContoursOutput().get(2));
                 synchronized (imgLock) {
                 	//comparing real and perceived height to calculate distance
-                    if(peg1.x < peg2.x) {
-                    	leftHeight = peg1.height;
-                    	rightHeight = peg2.height;
-                    	perceivedHeight = (peg1.height + peg2.height)/2.0;
-                    	perceivedWidth = (peg2.x + peg2.width) - peg1.x;
-                    	pegCenter = ((peg2.x + peg2.width) + peg1.x)/2.0;
-                    } else {
-                    	leftHeight = peg2.height;
-                    	rightHeight = peg1.height;
-                    	perceivedHeight = (peg2.height + peg1.height)/2.0;
-                    	perceivedWidth = (peg1.x + peg1.width) - peg2.x;
-                    	pegCenter = ((peg1.x + peg1.width) + peg2.x)/2.0;
-                    }
-                	//robot facing to the right of the peg is negative
-                    angleRobot = rad((pegCenter - cameraCenter) * horizontalDPP);
+//                	if(!pegPiece.equals(null)){
+//                	} else {
+//                		if(peg1.x < peg2.x) {
+//                    	leftHeight = peg1.height;
+//                    	rightHeight = peg2.height;
+//                    	perceivedHeight = (peg1.height + peg2.height)/2.0;
+//                    	perceivedWidth = (peg2.x + peg2.width) - peg1.x;
+//                    	pegCenter = ((peg2.x + peg2.width) + peg1.x)/2.0;
+//                		} else {
+//                    	leftHeight = peg2.height;
+//                    	rightHeight = peg1.height;
+//                    	perceivedHeight = (peg2.height + peg1.height)/2.0;
+//                    	perceivedWidth = (peg1.x + peg1.width) - peg2.x;
+//                    	pegCenter = ((peg1.x + peg1.width) + peg2.x)/2.0;
+//                		}
+//                	}
+                	
+                	//TEST
+                	leftHeight = peg1.height;
+                	rightHeight = peg2.height;
+                	double thirdHeight = pegPiece.height;
+                	perceivedHeight = (peg1.height + peg2.height)/2.0;
+                	perceivedWidth = (peg2.x + peg2.width) - peg1.x;
+                	pegCenter = ((peg2.x + peg2.width) + peg1.x)/2.0;
+                	//TEST
+                	//robot facing to the right of the peg is positive
+                    angleRobot = rad((cameraCenter - pegCenter) * horizontalDPP);
                     //distanceDirect is calculated in feet
                     distanceDirect = (realHeight * focalLength)/perceivedHeight;
-                    //DEPRECATED find angle from peg
+                    
                     robotBearing = rad(gyro.getAngle() % 360);
                     angleFromPeg = findAngleFromPeg();
                     /*
@@ -79,11 +92,16 @@ public class VisionProcess extends Thread {
                     distanceOffset = distanceDirect * Math.sin(angleFromPeg);
                     distanceTravel = distanceDirect * Math.cos(angleFromPeg);
                     
+                    SmartDashboard.putNumber("Peg1", leftHeight);
+                    SmartDashboard.putNumber("Peg2", rightHeight);
+                    SmartDashboard.putNumber("Peg3", thirdHeight);
+                    
+                    
                     SmartDashboard.putNumber("Perceived Height in pixels", perceivedHeight);
                     SmartDashboard.putNumber("Peg Center in pixels", pegCenter);
                     SmartDashboard.putNumber("Robot Angle in pixels", angleRobot);
                     SmartDashboard.putNumber("Direct Distance to Peg in feet", distanceDirect);
-                    SmartDashboard.putNumber("Bearing of the Robot in degrees", deg(robotBearing));
+                    SmartDashboard.putNumber("Bearing of the Robot in degrees", gyro.getAngle());
                 }
             }
         });

@@ -22,7 +22,7 @@ public class GoToPeg extends CommandGroup {
     	requires(Robot.drivetraintank);
     	
     	double[][] waypoints = Robot.visionProcess.findWaypoints();
-    	final PathPlanner path = new PathPlanner(waypoints);
+    	final PathPlanner path = new PathPlanner(centerTest);
     	double distanceDirect = Math.hypot(waypoints[3][0], waypoints[3][1]);
     	double totalTime = distanceDirect/5.0; //for robot speed 5 ft/s
     	path.calculate(totalTime, Robot.TIME_STEP, Robot.TRACK_WIDTH);

@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
         
 //        SmartDashboard.putNumber("Center X", centerX);
         visionProcess = new VisionProcess();
-    	visionProcess.start();
+        visionProcess.start();
         
         oi = new OI();
      }
