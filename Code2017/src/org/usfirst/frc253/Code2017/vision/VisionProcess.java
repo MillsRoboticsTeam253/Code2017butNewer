@@ -16,8 +16,8 @@ public class VisionProcess extends Thread {
 	
 	//Constants
 	private final double realHeight = (5.0/12.0); //in feet
-	private final double realWidth = 1; //TODO find actual real width
-	private final double focalLength = 0.814; //in feet; https://www.chiefdelphi.com/forums/showthread.php?p=1653594
+	private final double realWidth = (9.5/12.0); //in feet
+	private final double focalLength = 333.82; //in pixels; https://www.chiefdelphi.com/forums/showthread.php?p=1653594
 	private final double FOV = 60;
     private final double horizontalDPP = FOV/Robot.CAMERA_WIDTH;
     private final double cameraCenter = Robot.CAMERA_WIDTH/2;
@@ -42,14 +42,15 @@ public class VisionProcess extends Thread {
     public VisionProcess() {
     	this.gyro = Robot.sensorData.gyro;
     	visionThread = new VisionThread(Robot.camera, new GripPipeline(), pipeline -> {
-            if (!pipeline.filterContoursOutput().isEmpty()) {
-                Rect peg = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+            if (!pipeline.filterContoursOutput().isEmpty() && pipeline.filterContoursOutput().size() >= 2) {
+                Rect peg1 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+                Rect peg2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
                 synchronized (imgLock) {
                 	//comparing real and perceived height to calculate distance
-                    perceivedHeight = peg.height;
-                    perceivedWidth = peg.width;
+                    perceivedHeight = (peg1.height + peg2.height)/2.0;
+                    perceivedWidth = peg1.width;
                     
-                	pegCenter = peg.x + (peg.width / 2);
+                	pegCenter = peg1.x + (peg1.width / 2);
                     //robot facing to the right of the peg is positive
                     angleRobot = ((cameraCenter - pegCenter) * horizontalDPP) * (Math.PI / 180);
                     //distanceDirect is calculated in feet
