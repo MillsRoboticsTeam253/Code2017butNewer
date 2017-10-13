@@ -15,18 +15,22 @@ public class VisionProcess extends Thread {
 	private AnalogGyro gyro;
 	
 	//Constants
-	private final double realHeight = (5.0/12.0); //in feet
-	private final double realWidth = (9.5/12.0); //in feet
-	private final double focalLength = 333.82; //in pixels; https://www.chiefdelphi.com/forums/showthread.php?p=1653594
-	private final double FOV = 60;
-    private final double horizontalDPP = FOV/Robot.CAMERA_WIDTH;
-    private final double cameraCenter = Robot.CAMERA_WIDTH/2;
-    private final double leftPegBearing = 0; //TODO find value
-    private final double rightPegBearing = 0; //TODO find value
-    private final double offsetRatioThresh = 0.968; //5 degree threshold
+	private static final double realHeight = (5.0/12.0); //in feet
+	private static final double realWidth = (9.5/12.0); //in feet
+	private static final double focalLength = 333.82; //in pixels; https://www.chiefdelphi.com/forums/showthread.php?p=1653594
+	private static final double FOV = 60;
+    private static final double horizontalDPP = FOV/Robot.CAMERA_WIDTH;
+    private static final double cameraCenter = Robot.CAMERA_WIDTH/2.0;
+    private static final double leftPegBearing = rad(-60.0);
+    private static final double rightPegBearing = rad(60.0);
+    private static final double offsetRatioThresh = 0.968; //5 degree threshold
+    private static final double centerThresh = rad(5.0); //5 degree threshold
 
 	//Intermediate calculations
 	//Numbers that are important but only because we need them to calculate other things
+    private double leftHeight = 0.0;
+    private double rightHeight = 0.0;
+    
 	private double perceivedHeight = 0.0;
 	private double perceivedWidth = 0.0;
 	private double pegCenter = 0.0;
@@ -47,16 +51,26 @@ public class VisionProcess extends Thread {
                 Rect peg2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
                 synchronized (imgLock) {
                 	//comparing real and perceived height to calculate distance
-                    perceivedHeight = (peg1.height + peg2.height)/2.0;
-                    perceivedWidth = peg1.width;
-                    
-                	pegCenter = peg1.x + (peg1.width / 2);
-                    //robot facing to the right of the peg is positive
-                    angleRobot = ((cameraCenter - pegCenter) * horizontalDPP) * (Math.PI / 180);
+                    if(peg1.x < peg2.x) {
+                    	leftHeight = peg1.height;
+                    	rightHeight = peg2.height;
+                    	perceivedHeight = (peg1.height + peg2.height)/2.0;
+                    	perceivedWidth = (peg2.x + peg2.width) - peg1.x;
+                    	pegCenter = ((peg2.x + peg2.width) + peg1.x)/2.0;
+                    } else {
+                    	leftHeight = peg2.height;
+                    	rightHeight = peg1.height;
+                    	perceivedHeight = (peg2.height + peg1.height)/2.0;
+                    	perceivedWidth = (peg1.x + peg1.width) - peg2.x;
+                    	pegCenter = ((peg1.x + peg1.width) + peg2.x)/2.0;
+                    }
+                	//robot facing to the right of the peg is negative
+                    angleRobot = rad((pegCenter - cameraCenter) * horizontalDPP);
                     //distanceDirect is calculated in feet
                     distanceDirect = (realHeight * focalLength)/perceivedHeight;
                     //DEPRECATED find angle from peg
-                    robotBearing = (gyro.getAngle() % 360) * (Math.PI/180);
+                    robotBearing = rad(gyro.getAngle() % 360);
+                    angleFromPeg = findAngleFromPeg();
                     /*
                      * find legs of the right triangle formed by the peg
                      * and the robot; offset is x and travel is y if peg
@@ -69,11 +83,12 @@ public class VisionProcess extends Thread {
                     SmartDashboard.putNumber("Peg Center in pixels", pegCenter);
                     SmartDashboard.putNumber("Robot Angle in pixels", angleRobot);
                     SmartDashboard.putNumber("Direct Distance to Peg in feet", distanceDirect);
-                    SmartDashboard.putNumber("Bearing of the Robot in degrees", robotBearing * (180/Math.PI));
+                    SmartDashboard.putNumber("Bearing of the Robot in degrees", deg(robotBearing));
                 }
             }
         });
     }
+    
     @Override
     public void run() {
     	this.gyro.reset();
@@ -96,26 +111,104 @@ public class VisionProcess extends Thread {
     	}
     }
     
+    public double findAngleFromPeg() {
+    	synchronized(imgLock) {
+    		double bearing = getRobotBearing();
+    		int pegNum = whichPeg();
+    		if(pegNum == 1) { //left
+    			return bearing - leftPegBearing;
+    		} else if(pegNum == 3) { //right
+    			return bearing - rightPegBearing;
+    		} else { //center
+    			return bearing;
+    		}
+    	}
+    }
+    
     /**
      * @return 1 = left; 2 = center; 3 = right
      */
     public int whichPeg() {
     	synchronized (imgLock) {
-    		if(Math.abs(robotBearing - angleRobot) < (2.0 * (Math.PI/180))) {
-    			return 2;
+    		double bearing = getRobotBearing();
+    		double angle = getRobotAngle();
+    		double angleDiff = bearing - angle;
+    		if(!isOffset()) {
+    			//center peg, centered
+    			if(Math.abs(angleDiff) < centerThresh) {
+    				return 2;
+    			//right peg, centered
+    			} else if(angleDiff > rightPegBearing - centerThresh && angleDiff < rightPegBearing + centerThresh) {
+    				return 3;
+    			//left peg, centered
+    			} else {
+    				return 1;
+    			}
+    		} else {
+    			if(bearing >= rad(90)) { //right peg, right offset
+    				return 3;
+    			} else if(bearing <= rad(-90)) { //left peg, left offset
+    				return 1;
+    			} else if(bearing < 0 && offsetDirection() == 3) { //left peg, right offset
+    				return 1;
+    			} else if(bearing > 0 && offsetDirection() == 1) { //right peg, left offset
+    				return 3;
+    			} else {
+    				return 2; //all else is center
+    			}
     		}
-    		return 0; //TODO add conditionals for left and right
     	}
     }
     
     public boolean isOffset() {
-    	double perceivedWidth = getPerceivedWidth();
-    	double ratio = perceivedWidth / realWidth; //closer to 1 == less offset
-    	if(Math.abs(ratio) > offsetRatioThresh) { 
-    		return false;
-    	} else {
-    		return true;
+    	synchronized(imgLock) {
+    		double perceivedWidth = getPerceivedWidth();
+    		double ratio = perceivedWidth / realWidth; //closer to 1 == less offset
+    		if(Math.abs(ratio) > offsetRatioThresh) { 
+    			return false;
+    		} else {
+    			return true;
+    		}
     	}
+    }
+    
+    /**
+     * @return 1 = left; 3 = right; 0 = not offset
+     */
+    public int offsetDirection() {
+    	synchronized(imgLock) {
+    		double left = getLeftHeight();
+    		double right = getRightHeight();
+    		if(isOffset()) {
+    			if(left > right) {
+    				return 1;
+    			} else {
+    				return 3;
+    			}
+    		} else {
+    			return 0;
+    		}
+    	}
+    }
+    
+    public static double rad(double input) {
+    	return input * (Math.PI/180.0);
+    }
+    
+    public static double deg(double input) {
+    	return input * (180.0/Math.PI);
+    }
+    
+    public double getLeftHeight() {
+    	return leftHeight;
+    }
+    
+    public double getRightHeight() {
+    	return rightHeight;
+    }
+    
+    public double getRobotBearing() {
+    	return robotBearing;
     }
     
     public double getPerceivedWidth() {
