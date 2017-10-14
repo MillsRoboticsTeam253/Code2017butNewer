@@ -30,11 +30,11 @@ public class Drivetrain extends Subsystem {
     }
     
     public void setLeft(double power) {
-    	driveMotorLeft.set(power * RobotMap.driveMotorLeftDir);
+    	driveMotorLeft.set(power * 1.056 * RobotMap.driveMotorLeftDir);
     }
     
     public void setLeft_Back(double power) {
-    	driveMotorLeft_Back.set(power * RobotMap.driveMotorLeftBackDir);
+    	driveMotorLeft_Back.set(power * 1.056 * RobotMap.driveMotorLeftBackDir);
     }
     public void setRight(double power) {
     	driveMotorRight.set(power * RobotMap.driveMotorRightDir);

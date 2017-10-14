@@ -30,7 +30,6 @@ public class AutoCenter extends CommandGroup {
 
         addSequential(new AutoStraightDrive());
         //Drive straight to peg
-        addSequential(new AutoGearBackUp());
         //Back up to optimal gear placement position
         addSequential(new AutoGearDeploy());
         //Deploy gear
