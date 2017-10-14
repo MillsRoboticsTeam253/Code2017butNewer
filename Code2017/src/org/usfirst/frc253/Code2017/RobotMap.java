@@ -27,6 +27,9 @@ public class RobotMap {
 	public static final int driveMotorRight = 0; //0
 	public static final int driveMotorRight_Back = 1; //1
 	
+	public static final double ROBOT_LENGTH = (38.0/12.0); //in feet
+	public static final double ROBOT_WIDTH = (34.0/12.0); //in feet
+	
 	//Motor declarations
 	public static Spark gearFlipSpark1;
 	public static Servo servoServo1;
