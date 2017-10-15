@@ -48,7 +48,6 @@ public class AutoRight extends CommandGroup {
     	addSequential(new AutoLongStraightDrive());
         addSequential(new AutoSpinCounterwise());
         addSequential(new AutoStraightDrive());
-        addSequential(new AutoGearBackUp());
         addSequential(new AutoGearAutoCorrect());
         addSequential(new AutoGearDeploy());
         addSequential(new AutoRetract());

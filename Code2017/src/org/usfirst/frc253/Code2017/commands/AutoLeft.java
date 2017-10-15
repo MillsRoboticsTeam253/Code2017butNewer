@@ -48,7 +48,6 @@ public class AutoLeft extends CommandGroup {
     	addSequential(new AutoLongStraightDrive());
         addSequential(new AutoSpinClockwise());
         addSequential(new AutoStraightDrive());
-        addSequential(new AutoGearBackUp());
         addSequential(new AutoGearAutoCorrect());
         addSequential(new AutoGearDeploy());
         addSequential(new AutoRetract());

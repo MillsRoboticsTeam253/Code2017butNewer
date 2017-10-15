@@ -21,8 +21,8 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double leftSpeed = Robot.oi.getLeftJoystick().getY();	//Saved locally for quicker responses (read-write is slow)
-    	double rightSpeed = Robot.oi.getRightJoystick().getY();
+    	double leftSpeed = (3.0/3.8) * Robot.oi.getLeftJoystick().getY();	//Saved locally for quicker responses (read-write is slow)
+    	double rightSpeed =  (3.0/3.8) * Robot.oi.getRightJoystick().getY();
     	
     	//Joystick anti-drift
     	if(Math.abs(leftSpeed) > .125)

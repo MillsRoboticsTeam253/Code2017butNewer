@@ -22,10 +22,10 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class RobotMap {
 	
 	//Drive train ports
-    public static final int driveMotorLeft = 2; // 2
-	public static final int driveMotorLeft_Back = 3; //3
-	public static final int driveMotorRight = 0; //0
-	public static final int driveMotorRight_Back = 1; //1
+    public static final int driveMotorLeft = 3; // 2
+	public static final int driveMotorLeft_Back = 2; //3
+	public static final int driveMotorRight = 1; //1
+	public static final int driveMotorRight_Back = 0; //0
 	
 	public static final double ROBOT_LENGTH = (38.0/12.0); //in feet
 	public static final double ROBOT_WIDTH = (34.0/12.0); //in feet

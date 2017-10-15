@@ -23,10 +23,10 @@ public class StraightDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Drives straight
-    	Robot.drivetraintank.setLeft_Back(-.35);
-    	Robot.drivetraintank.setLeft(-.35);
-    	Robot.drivetraintank.setRight(-.35);
-    	Robot.drivetraintank.setRight_Back(-.35);
+    	Robot.drivetraintank.setLeft_Back(-.5);
+    	Robot.drivetraintank.setLeft(-.5);
+    	Robot.drivetraintank.setRight(-.5);
+    	Robot.drivetraintank.setRight_Back(-.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

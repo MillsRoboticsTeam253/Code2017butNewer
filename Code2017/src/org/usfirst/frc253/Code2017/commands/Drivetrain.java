@@ -3,26 +3,29 @@ package org.usfirst.frc253.Code2017.commands;
 
 import org.usfirst.frc253.Code2017.RobotMap;
 import org.usfirst.frc253.Code2017.subsystems.TankDrive;
+
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Drivetrain extends Subsystem {
     
 	//Motor declarations
-	private Victor driveMotorLeft;
+	private Talon driveMotorLeft;
 	private Victor driveMotorLeft_Back;
-	private Victor driveMotorRight;
-	private Victor driveMotorRight_Back;
+	private VictorSP driveMotorRight;
+	private Talon driveMotorRight_Back;
 	//These are referenced in Drivetrain()
 	
 	public Drivetrain() {
 		
 		//Creates motor objects
 		super();
-		driveMotorLeft = new Victor(RobotMap.driveMotorLeft);
+		driveMotorLeft = new Talon(RobotMap.driveMotorLeft);
 		driveMotorLeft_Back = new  Victor(RobotMap.driveMotorLeft_Back);
-		driveMotorRight = new Victor(RobotMap.driveMotorRight);
-		driveMotorRight_Back = new Victor(RobotMap.driveMotorRight_Back);
+		driveMotorRight = new VictorSP(RobotMap.driveMotorRight);
+		driveMotorRight_Back = new Talon(RobotMap.driveMotorRight_Back);
 	}
 	
     public void initDefaultCommand() {
@@ -30,11 +33,11 @@ public class Drivetrain extends Subsystem {
     }
     
     public void setLeft(double power) {
-    	driveMotorLeft.set(power * 1.056 * RobotMap.driveMotorLeftDir);
+    	driveMotorLeft.set(power * RobotMap.driveMotorLeftDir);
     }
     
     public void setLeft_Back(double power) {
-    	driveMotorLeft_Back.set(power * 1.056 * RobotMap.driveMotorLeftBackDir);
+    	driveMotorLeft_Back.set(power * RobotMap.driveMotorLeftBackDir);
     }
     public void setRight(double power) {
     	driveMotorRight.set(power * RobotMap.driveMotorRightDir);

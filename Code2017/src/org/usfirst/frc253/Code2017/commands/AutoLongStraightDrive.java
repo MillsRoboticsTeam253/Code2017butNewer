@@ -17,7 +17,7 @@ public class AutoLongStraightDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(1.45);
+    	setTimeout(1.47);
     }
 
     // Called repeatedly when this Command is scheduled to run
