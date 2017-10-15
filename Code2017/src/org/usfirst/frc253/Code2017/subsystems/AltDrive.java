@@ -22,7 +22,7 @@ public class AltDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double throttle = Robot.oi.getLeftJoystick().getY();	//Saved locally for quicker responses (read-write is slow)
-    	double direction = Robot.oi.getRightJoystick().getX();
+    	double direction = Robot.oi.getLeftJoystick().getX();
     	
     	double turnModifier = (direction + 1.00);
     	
