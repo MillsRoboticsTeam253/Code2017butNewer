@@ -17,10 +17,7 @@ public class NudgeRight extends Command {
     protected void execute() {
     	
     	//Clockwise rotation
-    	Robot.drivetraintank.setLeft_Back(-.25);
-    	Robot.drivetraintank.setLeft(-.25);
-    	Robot.drivetraintank.setRight(.25);
-    	Robot.drivetraintank.setRight_Back(.25);
+    	Robot.drivetraintank.setDriveTrain(-.25, .25);
     }
 
     protected boolean isFinished() {
@@ -30,12 +27,10 @@ public class NudgeRight extends Command {
     protected void end() {
     	
     	//Stops drive train
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 
     protected void interrupted() {
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 }

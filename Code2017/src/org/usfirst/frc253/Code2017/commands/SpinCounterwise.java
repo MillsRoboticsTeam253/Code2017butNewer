@@ -31,15 +31,9 @@ public class SpinCounterwise extends Command {
     	double gyroAngle = gyro.getAngle();
     	SmartDashboard.putNumber("Gyroscope Angle", gyroAngle);
     	if(gyroAngle > -110){
-    		Robot.drivetraintank.setLeft_Back(.5);
-    		Robot.drivetraintank.setLeft(.5);
-    		Robot.drivetraintank.setRight(-.5);
-    		Robot.drivetraintank.setRight_Back(-.5);
+    		Robot.drivetraintank.setDriveTrain(.5, -.5);
     	} else {
-    		Robot.drivetraintank.setLeft_Back(0);
-        	Robot.drivetraintank.setLeft(0);
-        	Robot.drivetraintank.setRight(0);
-        	Robot.drivetraintank.setRight_Back(0);
+    		Robot.drivetraintank.setDriveTrain(0, 0);
     		
     	}
     }
@@ -51,14 +45,12 @@ public class SpinCounterwise extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 }

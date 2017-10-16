@@ -1,8 +1,8 @@
 
-package org.usfirst.frc253.Code2017.commands;
+package org.usfirst.frc253.Code2017.subsystems;
 
 import org.usfirst.frc253.Code2017.RobotMap;
-import org.usfirst.frc253.Code2017.subsystems.TankDrive;
+import org.usfirst.frc253.Code2017.commands.TankDrive;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
@@ -30,6 +30,13 @@ public class Drivetrain extends Subsystem {
 	
     public void initDefaultCommand() {
         setDefaultCommand(new TankDrive());
+    }
+    
+    public void setDriveTrain(double left, double right) {
+    	driveMotorLeft.set(left * RobotMap.driveMotorLeftDir);
+    	driveMotorLeft_Back.set(left * RobotMap.driveMotorLeftBackDir);
+    	driveMotorRight.set(right * RobotMap.driveMotorRightDir);
+    	driveMotorRight_Back.set(right * RobotMap.driveMotorRightBackDir);
     }
     
     public void setLeft(double power) {
