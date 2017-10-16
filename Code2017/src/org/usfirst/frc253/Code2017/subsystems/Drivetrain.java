@@ -1,12 +1,14 @@
 
 package org.usfirst.frc253.Code2017.subsystems;
 
+import org.usfirst.frc253.Code2017.Robot;
 import org.usfirst.frc253.Code2017.RobotMap;
 import org.usfirst.frc253.Code2017.commands.TankDrive;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Drivetrain extends Subsystem {
@@ -18,6 +20,8 @@ public class Drivetrain extends Subsystem {
 	private Talon driveMotorRight_Back;
 	//These are referenced in Drivetrain()
 	
+	Command driveTrain;
+	
 	public Drivetrain() {
 		
 		//Creates motor objects
@@ -26,10 +30,12 @@ public class Drivetrain extends Subsystem {
 		driveMotorLeft_Back = new  Victor(RobotMap.driveMotorLeft_Back);
 		driveMotorRight = new VictorSP(RobotMap.driveMotorRight);
 		driveMotorRight_Back = new Talon(RobotMap.driveMotorRight_Back);
+		
+		this.driveTrain = (Command) Robot.driveChooser.getSelected();
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new TankDrive());
+        setDefaultCommand(this.driveTrain);
     }
     
     public void setDriveTrain(double left, double right) {

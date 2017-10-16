@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	
 	Command autonomousCommand;
     SendableChooser autoChooser;
+    public static SendableChooser driveChooser;
     
     //Declaring subsystems
     public static OI oi;
@@ -43,6 +44,10 @@ public class Robot extends IterativeRobot {
     	
     	//enables camera
     	camera.getInstance().startAutomaticCapture();
+    	
+    	driveChooser = new SendableChooser();
+        driveChooser.addDefault("Tank Drive", new TankDrive());
+        SmartDashboard.putData("Drive train chooser", driveChooser);
     	
     	//Subsystems
     	drivetraintank = new Drivetrain();
