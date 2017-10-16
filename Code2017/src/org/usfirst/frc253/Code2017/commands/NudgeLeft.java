@@ -31,5 +31,6 @@ public class NudgeLeft extends Command {
     }
 
     protected void interrupted() {
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 }
