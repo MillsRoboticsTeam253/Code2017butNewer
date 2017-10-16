@@ -14,24 +14,31 @@ package org.usfirst.frc253.Code2017.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc253.Code2017.Robot;
 
-public class ClimbUp extends Command {
+public class Climb extends Command {
 
-    public ClimbUp() {
+	private final double time;
+	private final double speed;
+	
+    public Climb(double speed, double time) {
     	
     	//Subsystem requirements
         requires(Robot.climber);
+        this.time = time;
+        this.speed = speed;
+        
     }
 
     protected void initialize() {
+    	setTimeout(time);
     }
 
     protected void execute() {
     	//Deploy gear
-    	Robot.climber.ClimbUp();
+    	Robot.climber.Climb(speed);
     }
 
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     protected void end() {

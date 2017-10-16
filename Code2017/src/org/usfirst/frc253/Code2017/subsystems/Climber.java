@@ -31,17 +31,9 @@ public class Climber extends Subsystem {
 
     	public Climber() {
         	super();
-        	 ClimbUp();
-        	 ClimbDown();
-        	 ClimbUpSlow();
-        	 ClimbDownSlow();
-        	 ClimbUpSlower();
-        	 ClimbDownSlower();
-        	 ClimbUpEvenSlower();
-        	 ClimbDownEvenSlower();
-        	 ClimbUpSlowest();
-        	 ClimbDownSlowest();
-        	 FullStop();
+    	}
+    	public void Climb(double speed) {
+    		spark1.set(speed);
     	}
     	public void ClimbUp(){
     		spark1.set(1);
@@ -49,29 +41,11 @@ public class Climber extends Subsystem {
     	public void ClimbDown(){
     		spark1.set(-1);
     	}
-    	public void ClimbUpSlow(){
-    		spark1.set(.8);
-    	}
     	public void ClimbDownSlow(){
     		spark1.set(-.8);
     	}
-    	public void ClimbUpSlower(){
-    		spark1.set(.6);
-    	}
     	public void ClimbDownSlower(){
     		spark1.set(-.6);
-    	}
-    	public void ClimbUpEvenSlower(){
-    		spark1.set(.4);
-    	}
-    	public void ClimbDownEvenSlower(){
-    		spark1.set(-.4);
-    	}
-    	public void ClimbUpSlowest(){
-    		spark1.set(.2);
-    	}
-    	public void ClimbDownSlowest(){
-    		spark1.set(-.2);
     	}
     	public void FullStop(){
     		spark1.set(0.00);
