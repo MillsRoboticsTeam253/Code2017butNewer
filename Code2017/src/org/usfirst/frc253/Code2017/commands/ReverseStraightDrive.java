@@ -24,10 +24,7 @@ public class ReverseStraightDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Drives straight backwards
-    	Robot.drivetraintank.setLeft_Back(.35);
-    	Robot.drivetraintank.setLeft(.35);
-    	Robot.drivetraintank.setRight(.35);
-    	Robot.drivetraintank.setRight_Back(.35);
+    	Robot.drivetraintank.setDriveTrain(.35, .35);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,10 +35,7 @@ public class ReverseStraightDrive extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	//Stops motors
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 
     // Called when another command which requires one or more of the same

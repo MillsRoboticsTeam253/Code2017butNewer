@@ -49,11 +49,7 @@ public class AutoGearBackUp extends Command {
     		end();
     	} else {
     		//left
-    		Robot.drivetraintank.setLeft_Back(.25);
-        	Robot.drivetraintank.setLeft(.25);
-        	//right
-        	Robot.drivetraintank.setRight_Back(.25);
-        	Robot.drivetraintank.setRight(.25);
+    		Robot.drivetraintank.setDriveTrain(.25, .25);
         	//update distances
         	rangeLeft = ultraLeft.getRangeInches();
         	rangeRight = ultraRight.getRangeInches();
@@ -67,10 +63,7 @@ public class AutoGearBackUp extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 
     // Called when another command which requires one or more of the same

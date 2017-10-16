@@ -23,10 +23,7 @@ public class StraightDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Drives straight
-    	Robot.drivetraintank.setLeft_Back(-.5);
-    	Robot.drivetraintank.setLeft(-.5);
-    	Robot.drivetraintank.setRight(-.5);
-    	Robot.drivetraintank.setRight_Back(-.5);
+    	Robot.drivetraintank.setDriveTrain(-.5, -.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,10 +34,7 @@ public class StraightDrive extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	//Stops motors
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 
     // Called when another command which requires one or more of the same

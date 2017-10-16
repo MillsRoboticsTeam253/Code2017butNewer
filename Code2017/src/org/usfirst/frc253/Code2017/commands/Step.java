@@ -27,10 +27,7 @@ public class Step extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetraintank.setLeft_Back(-leftVelocity);
-    	Robot.drivetraintank.setLeft(-leftVelocity);
-    	Robot.drivetraintank.setRight(-rightVelocity);
-    	Robot.drivetraintank.setRight_Back(-rightVelocity);
+    	Robot.drivetraintank.setDriveTrain(-leftVelocity, -rightVelocity);
     }
 
     // Make this return true when this Command no longer needs to run execute()

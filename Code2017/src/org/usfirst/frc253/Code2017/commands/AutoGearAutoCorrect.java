@@ -69,15 +69,9 @@ public class AutoGearAutoCorrect extends Command {
     			isRobotAligned = false;
     			SmartDashboard.putBoolean("Is the robot aligned?", isRobotAligned);
     			if(rangeLeft > rangeRight){
-    				Robot.drivetraintank.setLeft_Back(-.25);
-    		    	Robot.drivetraintank.setLeft(-.25);
-    		    	Robot.drivetraintank.setRight(.25);
-    		    	Robot.drivetraintank.setRight_Back(.25);
+    				Robot.drivetraintank.setDriveTrain(-.25, .25);
     			} else {
-    				Robot.drivetraintank.setLeft_Back(.25);
-    		    	Robot.drivetraintank.setLeft(.25);
-    		    	Robot.drivetraintank.setRight(-.25);
-    		    	Robot.drivetraintank.setRight_Back(-.25);
+    				Robot.drivetraintank.setDriveTrain(.25, -.25);
     			}
     		}
     	} else {
@@ -90,27 +84,15 @@ public class AutoGearAutoCorrect extends Command {
     			SmartDashboard.putBoolean("Is the robot aligned?", isRobotAligned);
     			if(rangeLeft > rangeRight){
     				if(Math.abs(rangeLeft - rangeRight) > 5.0){
-    					Robot.drivetraintank.setLeft_Back(-.25);
-    			    	Robot.drivetraintank.setLeft(-.25);
-    			    	Robot.drivetraintank.setRight(.25);
-    			    	Robot.drivetraintank.setRight_Back(.25);
+    					Robot.drivetraintank.setDriveTrain(-.25, .25);
     				} else {
-    					Robot.drivetraintank.setLeft_Back(.25);
-    			    	Robot.drivetraintank.setLeft(.25);
-    			    	Robot.drivetraintank.setRight(-.25);
-    			    	Robot.drivetraintank.setRight_Back(-.25);
+    					Robot.drivetraintank.setDriveTrain(.25, -.25);
     				}
     			} else {
     				if(Math.abs(rangeLeft - rangeRight) > 5.0){
-    					Robot.drivetraintank.setLeft_Back(.25);
-    			    	Robot.drivetraintank.setLeft(.25);
-    			    	Robot.drivetraintank.setRight(-.25);
-    			    	Robot.drivetraintank.setRight_Back(-.25);
+    					Robot.drivetraintank.setDriveTrain(.25, -.25);
     				} else {
-    					Robot.drivetraintank.setLeft_Back(-.25);
-    			    	Robot.drivetraintank.setLeft(-.25);
-    			    	Robot.drivetraintank.setRight(.25);
-    			    	Robot.drivetraintank.setRight_Back(.25);
+    					Robot.drivetraintank.setDriveTrain(-.25, .25);
     				}
     			}
     		}
@@ -124,18 +106,12 @@ public class AutoGearAutoCorrect extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted(){
-    	Robot.drivetraintank.setLeft_Back(0);
-    	Robot.drivetraintank.setLeft(0);
-    	Robot.drivetraintank.setRight(0);
-    	Robot.drivetraintank.setRight_Back(0);
+    	Robot.drivetraintank.setDriveTrain(0, 0);
     }
 }
