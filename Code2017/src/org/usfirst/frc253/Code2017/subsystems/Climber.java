@@ -43,6 +43,9 @@ public class Climber extends Subsystem {
         	 ClimbDownSlowest();
         	 FullStop();
     	}
+    	public void Climb(double speed) {
+    		spark1.set(speed);
+    	}
     	public void ClimbUp(){
     		spark1.set(1);
     	}
