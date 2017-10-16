@@ -32,6 +32,13 @@ public class Drivetrain extends Subsystem {
         setDefaultCommand(new TankDrive());
     }
     
+    public void setDriveTrain(double left, double right) {
+    	driveMotorLeft.set(left * RobotMap.driveMotorLeftDir);
+    	driveMotorLeft_Back.set(left * RobotMap.driveMotorLeftBackDir);
+    	driveMotorRight.set(right * RobotMap.driveMotorRightDir);
+    	driveMotorRight_Back.set(right * RobotMap.driveMotorRightBackDir);
+    }
+    
     public void setLeft(double power) {
     	driveMotorLeft.set(power * RobotMap.driveMotorLeftDir);
     }
