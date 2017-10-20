@@ -3,9 +3,13 @@ package org.usfirst.frc253.Code2017.subsystems;
 
 import org.usfirst.frc253.Code2017.Robot;
 import org.usfirst.frc253.Code2017.RobotMap;
+<<<<<<< HEAD:Code2017/src/org/usfirst/frc253/Code2017/subsystems/Drivetrain.java
 import org.usfirst.frc253.Code2017.commands.TankDrive;
 
 import edu.wpi.first.wpilibj.Talon;
+=======
+import org.usfirst.frc253.Code2017.subsystems.AltDrive;
+>>>>>>> ThrottleDrive:Code2017/src/org/usfirst/frc253/Code2017/commands/Drivetrain.java
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
@@ -35,6 +39,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
+<<<<<<< HEAD:Code2017/src/org/usfirst/frc253/Code2017/subsystems/Drivetrain.java
         setDefaultCommand(this.driveTrain);
     }
     
@@ -43,6 +48,9 @@ public class Drivetrain extends Subsystem {
     	driveMotorLeft_Back.set(left * RobotMap.driveMotorLeftBackDir);
     	driveMotorRight.set(right * RobotMap.driveMotorRightDir);
     	driveMotorRight_Back.set(right * RobotMap.driveMotorRightBackDir);
+=======
+        setDefaultCommand(new AltDrive());
+>>>>>>> ThrottleDrive:Code2017/src/org/usfirst/frc253/Code2017/commands/Drivetrain.java
     }
     
     public void setLeft(double power) {
