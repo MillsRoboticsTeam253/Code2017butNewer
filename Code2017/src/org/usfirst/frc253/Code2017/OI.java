@@ -92,10 +92,10 @@ public class OI {
         ReadSensors.whenPressed(new ReadSensors());
         
         ClimbUp = new JoystickButton(buttonBoard, 8);
-        ClimbUp.whileHeld(new ClimbUpAccel());
+        ClimbUp.whileHeld(new ClimbUp());
         
         ClimbDown = new JoystickButton(buttonBoard, 1);
-        ClimbDown.whileHeld(new ClimbDownAccel());
+        ClimbDown.whileHeld(new ClimbDown());
     }
 
     public Joystick getLeftJoystick() {
