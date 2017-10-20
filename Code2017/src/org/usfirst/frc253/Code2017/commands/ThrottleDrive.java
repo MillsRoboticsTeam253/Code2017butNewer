@@ -1,4 +1,4 @@
-package org.usfirst.frc253.Code2017.subsystems;
+package org.usfirst.frc253.Code2017.commands;
 
 import java.lang.Math;
 
@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * A command for the DrivetrainTank. This command drives the chassis using generic tank drive controls. There is no feedback currently. 
  */
-public class AltDrive extends Command {
+public class ThrottleDrive extends Command {
 
-    public AltDrive() {
+    public ThrottleDrive() {
         // Use requires() here to declare subsystem dependencies
         requires(org.usfirst.frc253.Code2017.Robot.drivetraintank);
     }

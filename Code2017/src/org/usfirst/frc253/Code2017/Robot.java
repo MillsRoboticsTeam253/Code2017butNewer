@@ -47,6 +47,7 @@ public class Robot extends IterativeRobot {
     	
     	driveChooser = new SendableChooser();
         driveChooser.addDefault("Tank Drive", new TankDrive());
+        driveChooser.addObject("Throttle Drive", new ThrottleDrive());
         SmartDashboard.putData("Drive train chooser", driveChooser);
     	
     	//Subsystems
