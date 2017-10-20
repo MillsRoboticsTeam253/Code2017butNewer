@@ -3,6 +3,7 @@ package org.usfirst.frc253.Code2017.subsystems;
 
 import org.usfirst.frc253.Code2017.RobotMap;
 import org.usfirst.frc253.Code2017.commands.TankDrive;
+import org.usfirst.frc253.Code2017.kinect.KinectDrive;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
@@ -29,7 +30,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new TankDrive());
+        setDefaultCommand(new KinectDrive());
     }
     
     public void setDriveTrain(double left, double right) {
