@@ -23,7 +23,7 @@ public class StraightDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Drives straight
-    	Robot.drivetraintank.setDriveTrain(-.5, -.5);
+    	Robot.drivetraintank.setDriveTrain(-.25, -.25);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -12,20 +12,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Drivetrain extends Subsystem {
     
 	//Motor declarations
-	private Talon driveMotorLeft;
-	private Victor driveMotorLeft_Back;
+	private VictorSP driveMotorLeft;
+	private VictorSP driveMotorLeft_Back;
 	private VictorSP driveMotorRight;
-	private Talon driveMotorRight_Back;
+	private VictorSP driveMotorRight_Back;
 	//These are referenced in Drivetrain()
 	
 	public Drivetrain() {
 		
 		//Creates motor objects
 		super();
-		driveMotorLeft = new Talon(RobotMap.driveMotorLeft);
-		driveMotorLeft_Back = new  Victor(RobotMap.driveMotorLeft_Back);
+		driveMotorLeft = new VictorSP(RobotMap.driveMotorLeft);
+		driveMotorLeft_Back = new  VictorSP(RobotMap.driveMotorLeft_Back);
 		driveMotorRight = new VictorSP(RobotMap.driveMotorRight);
-		driveMotorRight_Back = new Talon(RobotMap.driveMotorRight_Back);
+		driveMotorRight_Back = new VictorSP(RobotMap.driveMotorRight_Back);
 	}
 	
     public void initDefaultCommand() {
