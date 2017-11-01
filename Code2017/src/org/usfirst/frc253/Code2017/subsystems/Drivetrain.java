@@ -19,7 +19,7 @@ public class Drivetrain extends Subsystem {
 	private Talon driveMotorRight_Back;
 	//These are referenced in Drivetrain()
 	
-	Command driveTrain;
+	private Command driveTrain;
 	
 	public Drivetrain() {
 		
@@ -34,7 +34,9 @@ public class Drivetrain extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(this.driveTrain);
+        if(driveTrain != null) {
+        	setDefaultCommand(this.driveTrain);
+        }
     }
     
     public void setDriveTrain(double left, double right) {
