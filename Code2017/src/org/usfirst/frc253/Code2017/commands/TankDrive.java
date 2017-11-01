@@ -24,26 +24,31 @@ public class TankDrive extends Command {
     	double leftSpeed = Robot.oi.getLeftJoystick().getY();	//Saved locally for quicker responses (read-write is slow)
     	double rightSpeed =  Robot.oi.getRightJoystick().getY();
     	
+    	double leftSens = 1 + Robot.oi.getLeftJoystick().getZ();
+    	double rightSens = 1 + Robot.oi.getRightJoystick().getZ();
+    	
+    	Robot.drivetraintank.setDriveTrain(leftSpeed * leftSens, rightSpeed * rightSens);
+    	
     	//Joystick anti-drift
-    	if(Math.abs(leftSpeed) > .125)
-    		Robot.drivetraintank.setLeft(leftSpeed);
-    	else
-    		Robot.drivetraintank.setLeft(0);
-    		
-    	
-    	if(Math.abs(rightSpeed) > -.125)
-    		Robot.drivetraintank.setRight(rightSpeed);
-    	else
-    		Robot.drivetraintank.setRight(0);
-    	if(Math.abs(leftSpeed) > .125)
-    		Robot.drivetraintank.setLeft_Back(leftSpeed);
-    	else
-    		Robot.drivetraintank.setLeft_Back(0);
-    	
-    	if(Math.abs(rightSpeed) > .125)
-    		Robot.drivetraintank.setRight_Back(rightSpeed);
-    	else
-    		Robot.drivetraintank.setRight_Back(0);
+//    	if(Math.abs(leftSpeed) > .125)
+//    		Robot.drivetraintank.setLeft(leftSpeed);
+//    	else
+//    		Robot.drivetraintank.setLeft(0);
+//    		
+//    	
+//    	if(Math.abs(rightSpeed) > -.125)
+//    		Robot.drivetraintank.setRight(rightSpeed);
+//    	else
+//    		Robot.drivetraintank.setRight(0);
+//    	if(Math.abs(leftSpeed) > .125)
+//    		Robot.drivetraintank.setLeft_Back(leftSpeed);
+//    	else
+//    		Robot.drivetraintank.setLeft_Back(0);
+//    	
+//    	if(Math.abs(rightSpeed) > .125)
+//    		Robot.drivetraintank.setRight_Back(rightSpeed);
+//    	else
+//    		Robot.drivetraintank.setRight_Back(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
