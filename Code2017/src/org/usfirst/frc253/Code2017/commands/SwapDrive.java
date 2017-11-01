@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwapDrive extends Command {
 
-	boolean toggle = false;
+	boolean changeDrive = false;
+	boolean toggle = true;
 	
     public SwapDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -24,12 +25,22 @@ public class SwapDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double leftY = Robot.oi.getLeftJoystick().getY();	//Saved locally for quicker responses (read-write is slow)
-    	double rightX =  Robot.oi.getRightJoystick().getY();
+    	double rightX = Robot.oi.getRightJoystick().getX();
+    	double rightY =  Robot.oi.getRightJoystick().getY();
     	
     	boolean isPressed = Robot.oi.getLeftJoystick().getRawButton(7);
     	
-    	if(isPressed) {
-    		toggle = !toggle;
+    	if(toggle && isPressed) {
+    		toggle = false;
+    		changeDrive = !changeDrive;
+    	} else if(!isPressed) {
+    		toggle = true;
+    	}
+    	
+    	if(!changeDrive) {
+    		Robot.drivetraintank.setDriveTrain(leftY, rightY);
+    	} else {
+    		throttleDrive(leftY, rightX);
     	}
     	
     	//Joystick anti-drift
@@ -52,6 +63,18 @@ public class SwapDrive extends Command {
 //    		Robot.drivetraintank.setRight_Back(rightSpeed);
 //    	else
 //    		Robot.drivetraintank.setRight_Back(0);
+    }
+    
+    public static void throttleDrive(double throttle, double direction) {
+    	double turnModifier = (direction + 1.00);
+
+    	if(Math.abs(throttle) > .125){
+    		Robot.drivetraintank.setDriveTrain(throttle * turnModifier, throttle * (2.00 - turnModifier));
+    	} else if(Math.abs(throttle) < .125 && Math.abs(direction) > .125){
+    		Robot.drivetraintank.setDriveTrain(-direction, direction);
+    	} else {
+    		Robot.drivetraintank.setDriveTrain(0, 0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
