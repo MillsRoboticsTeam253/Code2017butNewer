@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwapDrive extends Command {
 
+	boolean toggle = false;
+	
     public SwapDrive() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drivetraintank);
@@ -23,6 +25,12 @@ public class SwapDrive extends Command {
     protected void execute() {
     	double leftY = Robot.oi.getLeftJoystick().getY();	//Saved locally for quicker responses (read-write is slow)
     	double rightX =  Robot.oi.getRightJoystick().getY();
+    	
+    	boolean isPressed = Robot.oi.getLeftJoystick().getRawButton(7);
+    	
+    	if(isPressed) {
+    		toggle = !toggle;
+    	}
     	
     	//Joystick anti-drift
 //    	if(Math.abs(leftSpeed) > .125)
