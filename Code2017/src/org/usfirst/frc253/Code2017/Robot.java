@@ -54,8 +54,10 @@ public class Robot extends IterativeRobot {
         //multiple autonomous chooser
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Center Position", new AutoCenter()); // add command as default
-        autoChooser.addObject("Right Position", new AutoRight());	// add another command
-        autoChooser.addObject("Left Position", new AutoLeft());
+        autoChooser.addObject("Red Right Position", new AutoRedRight());	// add another command
+        autoChooser.addObject("Red Left Position", new AutoRedLeft());
+        autoChooser.addObject("Blue Right Position", new AutoBlueLeft());
+        autoChooser.addObject("Blue Left Position", new AutoBlueLeft());
         autoChooser.addObject("Base Line", new AutoBaseLine());
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 

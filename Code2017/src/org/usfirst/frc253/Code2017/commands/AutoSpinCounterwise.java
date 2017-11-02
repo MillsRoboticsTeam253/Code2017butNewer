@@ -31,7 +31,7 @@ public class AutoSpinCounterwise extends Command {
     protected void execute() {
     	double gyroAngle = gyro.getAngle();
     	SmartDashboard.putNumber("Gyroscope Angle", gyroAngle);
-    	if(gyroAngle > -39){
+    	if(gyroAngle > -20){
     		Robot.drivetraintank.setDriveTrain(.5, -.5);
     	} else {
     		Robot.drivetraintank.setDriveTrain(0, 0);
