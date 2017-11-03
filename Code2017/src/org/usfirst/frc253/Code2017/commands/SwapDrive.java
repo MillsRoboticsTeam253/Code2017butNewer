@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwapDrive extends Command {
 
 	boolean changeDrive = false;
+	boolean changeJoystick = false;
 	boolean toggle = true;
+	boolean Switch = true;
 	
     public SwapDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -28,19 +30,31 @@ public class SwapDrive extends Command {
     	double rightX = Robot.oi.getRightJoystick().getX();
     	double rightY =  Robot.oi.getRightJoystick().getY();
     	
-    	boolean isPressed = Robot.oi.getLeftJoystick().getRawButton(7);
+    	boolean isPressedDrive = Robot.oi.getLeftJoystick().getRawButton(7);
+    	boolean isPressedSwitch = Robot.oi.getLeftJoystick().getRawButton(6);
     	
-    	if(toggle && isPressed) {
+    	if(toggle && isPressedDrive) {
     		toggle = false;
     		changeDrive = !changeDrive;
-    	} else if(!isPressed) {
+    	} else if(!isPressedDrive) {
     		toggle = true;
+    	}
+    	
+    	if(Switch && isPressedSwitch) {
+    		Switch = false;
+    		changeJoystick = !changeJoystick;
+    	} else if(!isPressedDrive) {
+    		Switch = true;
     	}
     	
     	if(!changeDrive) {
     		Robot.drivetraintank.setDriveTrain(leftY, rightY);
     	} else {
-    		throttleDrive(leftY, rightX);
+    		if(!changeJoystick){
+    			throttleDrive(leftY, rightX);
+    		} else {
+    			throttleDrive(leftY, rightX);
+    		}
     	}
     	
     	//Joystick anti-drift
