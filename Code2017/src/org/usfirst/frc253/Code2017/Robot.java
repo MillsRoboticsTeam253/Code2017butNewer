@@ -12,6 +12,7 @@
 package org.usfirst.frc253.Code2017;
 
 import org.usfirst.frc253.Code2017.subsystems.*;
+import org.usfirst.frc253.Code2017.vision.VisionProcess;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc253.Code2017.commands.*;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
@@ -44,6 +46,8 @@ public class Robot extends IterativeRobot {
     public static UsbCamera camera;
     public final static int CAMERA_WIDTH = 640;
     public final static int CAMERA_HEIGHT = 480;
+    
+    public static VisionProcess process;
     
     public final static double TIME_STEP = 0.1; //in seconds
     public final static double TRACK_WIDTH = 2; //in feet
@@ -70,7 +74,9 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Right Position", new AutoRight());	// add another command
         autoChooser.addObject("Left Position", new AutoLeft());
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
-        
+
+        process = new VisionProcess();
+        process.gripRunner.runForever();
 //        SmartDashboard.putNumber("Center X", centerX);
         
         oi = new OI();
