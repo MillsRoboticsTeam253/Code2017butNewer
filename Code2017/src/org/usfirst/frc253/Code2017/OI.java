@@ -97,8 +97,6 @@ public class OI {
         
         ClimbDown = new JoystickButton(buttonBoard, 1);
         ClimbDown.whileHeld(new ClimbDownAccel());
-        
-        SmartDashboard.putData("Go to Peg", new GoToPeg());
     }
 
     public Joystick getLeftJoystick() {

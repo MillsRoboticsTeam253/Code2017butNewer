@@ -12,7 +12,6 @@
 package org.usfirst.frc253.Code2017;
 
 import org.usfirst.frc253.Code2017.subsystems.*;
-import org.usfirst.frc253.Code2017.vision.*;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc253.Code2017.commands.*;
@@ -40,7 +39,6 @@ public class Robot extends IterativeRobot {
     public static Servo servo;
     public static Climber climber;
     public static SensorData sensorData;
-    public static VisionProcess visionProcess;
     //These are referenced in robotInit()
 
     public static UsbCamera camera;
@@ -74,8 +72,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
         
 //        SmartDashboard.putNumber("Center X", centerX);
-        visionProcess = new VisionProcess();
-        visionProcess.start();
         
         oi = new OI();
      }
